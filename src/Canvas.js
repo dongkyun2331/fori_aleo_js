@@ -81,7 +81,7 @@ function Canvas() {
       const deltaX = backgroundPosition.x - characterPosition.x;
       const deltaY = backgroundPosition.y - characterPosition.y;
       setCharacterPosition({
-        x: characterPosition.x + deltaX,
+        x: characterPosition.x - deltaX,
         y: characterPosition.y + deltaY,
       });
     }
@@ -131,8 +131,7 @@ function Canvas() {
     <div className="App">
       <canvas></canvas>
       <div>
-        캐릭터의 처음 위치에서 X축으로 {characterPosition.x}px 만큼, Y축으로{" "}
-        {characterPosition.y}px 만큼 떨어져 있습니다.
+        X {characterPosition.x}, Y {characterPosition.y}
       </div>
     </div>
   );
