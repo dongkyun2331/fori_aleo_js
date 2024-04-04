@@ -1,8 +1,5 @@
-import { useMemo, useState } from "react";
-import {
-  WalletProvider,
-  useWallet,
-} from "@demox-labs/aleo-wallet-adapter-react";
+import { useMemo } from "react";
+import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
 import {
   WalletModalProvider,
   WalletMultiButton,
@@ -40,26 +37,10 @@ export const App = () => {
         >
           <WalletModalProvider>
             <WalletMultiButton />
-            <WalletInfo /> {/* 수정된 부분 */}
           </WalletModalProvider>
         </WalletProvider>
       </div>
       <Canvas />
-    </div>
-  );
-};
-
-const WalletInfo = () => {
-  const { wallet } = useWallet(); // 지갑 정보 가져오기
-  const [walletAddress, setWalletAddress] = useState(""); // 지갑 주소 상태 설정
-
-  wallet?.getAddress().then((address) => {
-    setWalletAddress(address || "주소를 가져올 수 없음");
-  });
-
-  return (
-    <div className="text-center mt-3">
-      <p>지갑 주소: {walletAddress}</p>
     </div>
   );
 };

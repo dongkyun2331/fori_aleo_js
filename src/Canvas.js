@@ -3,6 +3,7 @@ import "./App.css"; // App.css 파일에 body의 background-color를 설정해�
 
 function Canvas() {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 }); // 캐릭터 좌표 상태 추가
 
   useEffect(() => {
     const canvas = document.querySelector("canvas");
@@ -12,13 +13,14 @@ function Canvas() {
 
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     const image = new Image();
     image.src = "./img/Pellet Town.png";
     const playerImage = new Image();
     playerImage.src = "./img/playerDown.png";
     image.onload = () => {
       ctx.drawImage(image, -750, -550);
-      setImageLoaded(true); // 이미지 로드 완료 상태 업데이트
+      setImageLoaded(true);
       playerImage.onload = () => {
         ctx.drawImage(
           playerImage,
@@ -26,8 +28,8 @@ function Canvas() {
           0,
           playerImage.width / 4,
           playerImage.height,
-          canvas.width / 2 - playerImage.width / 8, // 가로 위치 조정
-          canvas.height / 2 - playerImage.height / 2, // 세로 위치 조정
+          canvas.width / 2 - playerImage.width / 8,
+          canvas.height / 2 - playerImage.height / 2,
           playerImage.width / 4,
           playerImage.height
         );
@@ -61,23 +63,23 @@ function Canvas() {
     };
 
     let lastKey = "";
-    // 애니메이션 함수
+
     function animate() {
       window.requestAnimationFrame(animate);
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스를 지움
-      background.draw(ctx); // 배경 스프라이트 그리기
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      background.draw(ctx);
+
       ctx.drawImage(
         playerImage,
         0,
         0,
         playerImage.width / 4,
         playerImage.height,
-        canvas.width / 2 - playerImage.width / 8,
-        canvas.height / 2 - playerImage.height / 2,
+        canvas.width / 2 - playerImage.width / 8 + playerPosition.x, // 캐릭터 좌표 추가
+        canvas.height / 2 - playerImage.height / 2 + playerPosition.y, // 캐릭터 좌표 추가
         playerImage.width / 4,
         playerImage.height
-      ); // 플레이어 이미지 그리기
-
+      );
       // 키 입력에 따라 배경 위치 변경
       if (keys.w.pressed && lastKey === "w") background.position.y += 3;
       else if (keys.a.pressed && lastKey === "a") background.position.x += 3;
@@ -92,18 +94,22 @@ function Canvas() {
         case "w":
           keys.w.pressed = true;
           lastKey = "w";
+          setPlayerPosition((prevPos) => ({ ...prevPos, y: prevPos.y - 3 })); // 위로 이동
           break;
         case "a":
           keys.a.pressed = true;
           lastKey = "a";
+          setPlayerPosition((prevPos) => ({ ...prevPos, x: prevPos.x - 3 })); // 왼쪽으로 이동
           break;
         case "s":
           keys.s.pressed = true;
           lastKey = "s";
+          setPlayerPosition((prevPos) => ({ ...prevPos, y: prevPos.y + 3 })); // 아래로 이동
           break;
         case "d":
           keys.d.pressed = true;
           lastKey = "d";
+          setPlayerPosition((prevPos) => ({ ...prevPos, x: prevPos.x + 3 })); // 오른쪽으로 이동
           break;
       }
     });
@@ -129,6 +135,10 @@ function Canvas() {
   return (
     <div className="App">
       <canvas></canvas>
+      <div>
+        캐릭터 좌표: ({playerPosition.x}, {playerPosition.y})
+      </div>{" "}
+      {/* 좌표 표시 */}
     </div>
   );
 }
