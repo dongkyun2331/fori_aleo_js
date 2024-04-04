@@ -38,12 +38,12 @@ function Memo({ characterPosition }) {
       treasurePosition.x === characterPosition.x &&
       treasurePosition.y === characterPosition.y
     ) {
-      const message = `보물을 찾았습니다! X: ${treasurePosition.x}, Y: ${treasurePosition.y}`;
+      const message = `보물을 찾았습니다! I found the treasure! X: ${treasurePosition.x}, Y: ${treasurePosition.y}`;
       const updatedMemoList = [...memoList, { content: message }];
       setMemoList(updatedMemoList);
       localStorage.setItem("memoList", JSON.stringify(updatedMemoList));
     } else {
-      const message = `보물이 없습니다. `;
+      const message = `보물이 없습니다. There is no treasure.`;
       const updatedMemoList = [...memoList, { content: message }];
       setMemoList(updatedMemoList);
       localStorage.setItem("memoList", JSON.stringify(updatedMemoList));
@@ -75,7 +75,7 @@ function Memo({ characterPosition }) {
           placeholder="Text"
         />
         <button onClick={handleAddMemo}>Submit</button>
-        <button onClick={handleFindTreasure}>보물 찾기</button>
+        <button onClick={handleFindTreasure}>Find Treasure</button>
       </div>
     </div>
   );

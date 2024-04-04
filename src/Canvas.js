@@ -130,7 +130,7 @@ function Canvas() {
 
   const handleHideTreasure = () => {
     localStorage.setItem("treasurePosition", JSON.stringify(characterPosition));
-    alert("보물을 숨겼습니다!");
+    alert("보물을 숨겼습니다! hidden treasure!");
   };
 
   return (
@@ -139,7 +139,7 @@ function Canvas() {
         X {characterPosition.x}, Y {characterPosition.y}
       </div>
       <canvas></canvas>
-      <button onClick={handleHideTreasure}>보물 숨기기</button>
+      <button onClick={handleHideTreasure}>Hide Treasure</button>
       <Memo characterPosition={characterPosition} />
     </div>
   );
