@@ -11,7 +11,6 @@ import {
 } from "@demox-labs/aleo-wallet-adapter-base";
 import "./App.css";
 import Canvas from "./Canvas";
-import Memo from "./Memo";
 
 require("@demox-labs/aleo-wallet-adapter-reactui/styles.css");
 
@@ -42,7 +41,6 @@ export const App = () => {
         </WalletProvider>
       </div>
       <Canvas />
-      <Memo />
     </div>
   );
 };

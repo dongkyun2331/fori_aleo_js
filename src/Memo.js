@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-function Memo() {
+function Memo({ characterPosition }) {
   const [memoList, setMemoList] = useState([]);
   const [newMemo, setNewMemo] = useState("");
   const memoContainerRef = useRef(null);
@@ -29,6 +29,27 @@ function Memo() {
     }
   };
 
+  const handleFindTreasure = () => {
+    const treasurePosition = JSON.parse(
+      localStorage.getItem("treasurePosition")
+    );
+    if (
+      treasurePosition &&
+      treasurePosition.x === characterPosition.x &&
+      treasurePosition.y === characterPosition.y
+    ) {
+      const message = `보물을 찾았습니다! X: ${treasurePosition.x}, Y: ${treasurePosition.y}`;
+      const updatedMemoList = [...memoList, { content: message }];
+      setMemoList(updatedMemoList);
+      localStorage.setItem("memoList", JSON.stringify(updatedMemoList));
+    } else {
+      const message = `보물이 없습니다. `;
+      const updatedMemoList = [...memoList, { content: message }];
+      setMemoList(updatedMemoList);
+      localStorage.setItem("memoList", JSON.stringify(updatedMemoList));
+    }
+  };
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleAddMemo();
@@ -54,6 +75,7 @@ function Memo() {
           placeholder="Text"
         />
         <button onClick={handleAddMemo}>Submit</button>
+        <button onClick={handleFindTreasure}>보물 찾기</button>
       </div>
     </div>
   );

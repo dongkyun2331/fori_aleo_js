@@ -37,6 +37,17 @@
   }
 }
 
+button {
+  padding: 8px 16px;
+  margin-top: 16px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
 body {
   background-color: #f0f0f0; /* 배경색 설정 */
   display: flex;

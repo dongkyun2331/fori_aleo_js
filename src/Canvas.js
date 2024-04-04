@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css"; // App.css 파일에 body의 background-color를 설정해주세요.
+import Memo from "./Memo";
 
 function Canvas() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -127,13 +128,21 @@ function Canvas() {
     });
   }, []);
 
+  const handleHideTreasure = () => {
+    localStorage.setItem("treasurePosition", JSON.stringify(characterPosition));
+    alert("보물을 숨겼습니다!");
+  };
+
   return (
     <div className="App">
-      <canvas></canvas>
       <div>
         X {characterPosition.x}, Y {characterPosition.y}
       </div>
+      <canvas></canvas>
+      <button onClick={handleHideTreasure}>보물 숨기기</button>
+      <Memo characterPosition={characterPosition} />
     </div>
   );
 }
+
 export default Canvas;
