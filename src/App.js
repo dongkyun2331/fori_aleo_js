@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import { useMemo } from "react";
+import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
+import {
+  WalletModalProvider,
+  WalletMultiButton,
+} from "@demox-labs/aleo-wallet-adapter-reactui";
+import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
+import {
+  DecryptPermission,
+  WalletAdapterNetwork,
+} from "@demox-labs/aleo-wallet-adapter-base";
+import "./App.css";
+// import Canvas from "./Canvas";
 
-function App() {
+require("@demox-labs/aleo-wallet-adapter-reactui/styles.css");
+
+export const App = () => {
+  const wallets = useMemo(
+    () => [
+      new LeoWalletAdapter({
+        appName: "Leo Demo App",
+      }),
+    ],
+    []
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="flex-column rounded border-2 p-4 bg-light shadow">
+        <h1 className="text-center">Hello, Aleo!</h1>
+
+        <WalletProvider
+          wallets={wallets}
+          decryptPermission={DecryptPermission.UponRequest}
+          network={WalletAdapterNetwork.Testnet}
+          autoConnect={true}
         >
-          Learn React
-        </a>
-      </header>
+          <WalletModalProvider>
+            <WalletMultiButton />
+            {/* <WalletToolBox /> */}
+          </WalletModalProvider>
+        </WalletProvider>
+      </div>
+      {/* <Canvas /> */}
     </div>
   );
-}
+};
 
 export default App;
