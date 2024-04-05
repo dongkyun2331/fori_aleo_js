@@ -156,7 +156,7 @@ function Canvas() {
           onChange={handleTreasureMemoChange}
           placeholder="Text"
         />
-        <button onClick={handleHideTreasure}>보물 숨기기</button>
+        <button onClick={handleHideTreasure}>Hide Treasure</button>
       </div>
       <Memo characterPosition={characterPosition} treasureMemo={treasureMemo} />
     </div>
