@@ -134,7 +134,7 @@ function Canvas() {
           break;
       }
     });
-  }, []);
+  }, [backgroundPosition, characterPosition.x, characterPosition.y]);
 
   const handleTreasureMemoChange = (event) => {
     setTreasureMemo(event.target.value);
