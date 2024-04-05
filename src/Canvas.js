@@ -7,8 +7,10 @@ import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 
 function Canvas() {
+  // eslint-disable-next-line
   const [imageLoaded, setImageLoaded] = useState(false);
   const [characterPosition, setCharacterPosition] = useState({ x: 0, y: 0 });
+  // eslint-disable-next-line
   const [backgroundPosition, setBackgroundPosition] = useState({
     x: 0,
     y: 0,
@@ -98,6 +100,7 @@ function Canvas() {
     animate();
 
     window.addEventListener("keydown", (e) => {
+      // eslint-disable-next-line
       switch (e.key) {
         case "ArrowUp":
           keys.ArrowUp.pressed = true;
@@ -119,6 +122,7 @@ function Canvas() {
     });
 
     window.addEventListener("keyup", (e) => {
+      // eslint-disable-next-line
       switch (e.key) {
         case "ArrowUp":
           keys.ArrowUp.pressed = false;
@@ -134,7 +138,8 @@ function Canvas() {
           break;
       }
     });
-  }, [backgroundPosition, characterPosition.x, characterPosition.y]);
+    // eslint-disable-next-line
+  }, []);
 
   const handleTreasureMemoChange = (event) => {
     setTreasureMemo(event.target.value);
