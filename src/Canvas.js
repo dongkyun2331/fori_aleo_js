@@ -1,5 +1,6 @@
+// Canvas.js
 import React, { useState, useEffect } from "react";
-import "./App.css"; // App.css 파일에 body의 background-color를 설정해주세요.
+import "./App.css";
 import Memo from "./Memo";
 
 function Canvas() {
@@ -9,6 +10,7 @@ function Canvas() {
     x: 0,
     y: 0,
   });
+  const [treasureMemo, setTreasureMemo] = useState("");
 
   useEffect(() => {
     const canvas = document.querySelector("canvas");
@@ -25,7 +27,7 @@ function Canvas() {
     playerImage.src = "./img/playerDown.png";
     image.onload = () => {
       ctx.drawImage(image, -750, -550);
-      setImageLoaded(true); // 이미지 로드 완료 상태 업데이트
+      setImageLoaded(true);
       playerImage.onload = () => {
         ctx.drawImage(
           playerImage,
@@ -54,12 +56,12 @@ function Canvas() {
     // 애니메이션 함수
     function animate() {
       window.requestAnimationFrame(animate);
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스를 지움
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(
         image,
         -750 + backgroundPosition.x,
         -550 + backgroundPosition.y
-      ); // 배경 이미지 그리기
+      );
       ctx.drawImage(
         playerImage,
         0,
@@ -70,15 +72,13 @@ function Canvas() {
         canvas.height / 2 - playerImage.height / 2,
         playerImage.width / 4,
         playerImage.height
-      ); // 플레이어 이미지 그리기
+      );
 
-      // 키 입력에 따라 배경 위치 변경
       if (keys.w.pressed && lastKey === "w") backgroundPosition.y += 3;
       else if (keys.a.pressed && lastKey === "a") backgroundPosition.x += 3;
       else if (keys.s.pressed && lastKey === "s") backgroundPosition.y -= 3;
       else if (keys.d.pressed && lastKey === "d") backgroundPosition.x -= 3;
 
-      // 캐릭터의 초기 위치
       const deltaX = backgroundPosition.x - characterPosition.x;
       const deltaY = backgroundPosition.y - characterPosition.y;
       setCharacterPosition({
@@ -128,9 +128,15 @@ function Canvas() {
     });
   }, []);
 
+  const handleTreasureMemoChange = (event) => {
+    setTreasureMemo(event.target.value);
+  };
+
   const handleHideTreasure = () => {
     localStorage.setItem("treasurePosition", JSON.stringify(characterPosition));
-    alert("보물을 숨겼습니다! hidden treasure!");
+    localStorage.setItem("treasureMemo", JSON.stringify(treasureMemo));
+    alert(`보물을 숨겼습니다! hidden treasure! ${treasureMemo}`);
+    setTreasureMemo("");
   };
 
   return (
@@ -139,8 +145,16 @@ function Canvas() {
         X {characterPosition.x}, Y {characterPosition.y}
       </div>
       <canvas></canvas>
-      <button onClick={handleHideTreasure}>Hide Treasure</button>
-      <Memo characterPosition={characterPosition} />
+      <div>
+        <input
+          type="text"
+          value={treasureMemo}
+          onChange={handleTreasureMemoChange}
+          placeholder="Text"
+        />
+        <button onClick={handleHideTreasure}>보물 숨기기</button>
+      </div>
+      <Memo characterPosition={characterPosition} treasureMemo={treasureMemo} />
     </div>
   );
 }

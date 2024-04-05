@@ -1,6 +1,7 @@
+// Memo.js
 import React, { useState, useEffect, useRef } from "react";
 
-function Memo({ characterPosition }) {
+function Memo({ characterPosition, treasureMemo }) {
   const [memoList, setMemoList] = useState([]);
   const [newMemo, setNewMemo] = useState("");
   const memoContainerRef = useRef(null);
@@ -33,12 +34,14 @@ function Memo({ characterPosition }) {
     const treasurePosition = JSON.parse(
       localStorage.getItem("treasurePosition")
     );
+    const savedTreasureMemo = JSON.parse(localStorage.getItem("treasureMemo"));
+
     if (
       treasurePosition &&
       treasurePosition.x === characterPosition.x &&
       treasurePosition.y === characterPosition.y
     ) {
-      const message = `보물을 찾았습니다! I found the treasure! X: ${treasurePosition.x}, Y: ${treasurePosition.y}`;
+      const message = `보물을 찾았습니다! I found the treasure! X: ${treasurePosition.x}, Y: ${treasurePosition.y} ${savedTreasureMemo}`;
       const updatedMemoList = [...memoList, { content: message }];
       setMemoList(updatedMemoList);
       localStorage.setItem("memoList", JSON.stringify(updatedMemoList));
