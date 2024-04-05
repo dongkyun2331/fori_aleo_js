@@ -4,6 +4,14 @@
 
 https://youtu.be/91Fqq_Q-WmE
 
+# Download Tiled
+
+https://www.mapeditor.org/download.html
+
+# tileset
+
+https://cypor.itch.io/12x12-rpg-tileset
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
