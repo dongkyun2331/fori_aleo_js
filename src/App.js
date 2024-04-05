@@ -27,8 +27,6 @@ export const App = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="flex-column rounded border-2 p-4 bg-light shadow">
-        <h1 className="text-center">Hello, Aleo!</h1>
-
         <WalletProvider
           wallets={wallets}
           decryptPermission={DecryptPermission.UponRequest}
