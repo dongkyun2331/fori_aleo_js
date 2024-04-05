@@ -35,10 +35,10 @@ export const App = () => {
         >
           <WalletModalProvider>
             <WalletMultiButton />
+            <Canvas />
           </WalletModalProvider>
         </WalletProvider>
       </div>
-      <Canvas />
     </div>
   );
 };

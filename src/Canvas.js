@@ -1,7 +1,10 @@
 // Canvas.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import Memo from "./Memo";
+import { WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
+import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
+import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 
 function Canvas() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -11,6 +14,7 @@ function Canvas() {
     y: 0,
   });
   const [treasureMemo, setTreasureMemo] = useState("");
+  const { wallet, publicKey } = useWallet();
 
   useEffect(() => {
     const canvas = document.querySelector("canvas");
@@ -136,12 +140,25 @@ function Canvas() {
     setTreasureMemo(event.target.value);
   };
 
-  const handleHideTreasure = () => {
+  // const handleHideTreasure = () => {
+  //   localStorage.setItem("treasurePosition", JSON.stringify(characterPosition));
+  //   localStorage.setItem("treasureMemo", JSON.stringify(treasureMemo));
+  //   alert(`보물을 숨겼습니다! hidden treasure! ${treasureMemo}`);
+  //   setTreasureMemo("");
+  // };
+
+  const handleHideTreasure = useCallback(async () => {
     localStorage.setItem("treasurePosition", JSON.stringify(characterPosition));
     localStorage.setItem("treasureMemo", JSON.stringify(treasureMemo));
-    alert(`보물을 숨겼습니다! hidden treasure! ${treasureMemo}`);
+
+    if (!publicKey) throw new WalletNotConnectedError();
+    const bytes = new TextEncoder().encode(treasureMemo);
+    const signatureBytes = await wallet?.adapter.signMessage(bytes);
+    if (!(wallet?.adapter instanceof LeoWalletAdapter)) return;
+    const signature = new TextDecoder().decode(signatureBytes);
+    alert(`보물을 숨겼습니다! hidden treasure! ${signature}`);
     setTreasureMemo("");
-  };
+  }, [wallet, publicKey, treasureMemo, characterPosition]);
 
   return (
     <div className="App">
@@ -156,7 +173,9 @@ function Canvas() {
           onChange={handleTreasureMemoChange}
           placeholder="Text"
         />
-        <button onClick={handleHideTreasure}>Hide Treasure</button>
+        <button onClick={handleHideTreasure} disabled={!publicKey}>
+          Hide Treasure
+        </button>
       </div>
       <Memo characterPosition={characterPosition} treasureMemo={treasureMemo} />
     </div>
