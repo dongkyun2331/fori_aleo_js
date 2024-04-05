@@ -162,6 +162,7 @@ function Canvas() {
     if (!(wallet?.adapter instanceof LeoWalletAdapter)) return;
     const signature = new TextDecoder().decode(signatureBytes);
     alert(`보물을 숨겼습니다! hidden treasure! ${signature}`);
+    console.log(signature);
     setTreasureMemo("");
   }, [wallet, publicKey, treasureMemo, characterPosition]);
 
