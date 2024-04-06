@@ -45,6 +45,9 @@ function Memo({ characterPosition, treasureMemo }) {
       const updatedMemoList = [...memoList, { content: message }];
       setMemoList(updatedMemoList);
       localStorage.setItem("memoList", JSON.stringify(updatedMemoList));
+      alert(
+        `보물을 찾았습니다! I found the treasure! X: ${treasurePosition.x}, Y: ${treasurePosition.y} ${savedTreasureMemo}`
+      );
     } else {
       const message = `보물이 없습니다. There is no treasure.`;
       const updatedMemoList = [...memoList, { content: message }];
